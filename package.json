@@ -1,7 +1,7 @@
 {
-  "name": "template",
+  "name": "Weather app",
   "version": "1.0.0",
-  "description": "template for my future projects with pre-configured webpack and other dependencies",
+  "description": "Weather app website",
   "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack.config.js",
