@@ -4,16 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <script
+      src="https://kit.fontawesome.com/190c076eca.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
 
   <body>
-    <h1><%= htmlWebpackPlugin.options.myPageHeader %></h1>
-    <h3>Welcome to the Awesome application</h3>
-
-    <my-app> <img src="#" /> <button>Click</button> </my-app>
-    <form action="#" method="get">
-      <input type="search" name="search" placeholder="Search..." />
-      <button type="submit">Search</button>
-    </form>
+    <main>
+      <h1>Weather-App</h1>
+      <form action="#" method="get">
+        <input type="search" name="search" placeholder="City" required />
+        <button type="submit"><i class="fas fa-search"></i></button>
+      </form>
+      <div id="result">
+        <div id="location"></div>
+        <div id="temperature"></div>
+        <div id="condition"></div>
+        <div id="humidity"></div>
+        <div id="wind"></div>
+        <div id="pressure"></div>
+        <div><img id="icon" /></div>
+        <div id="lastUpdated"></div>
+      </div>
+    </main>
   </body>
 </html>
