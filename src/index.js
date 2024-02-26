@@ -90,7 +90,7 @@ function handleError(response) {
   }
 }
 async function getWeather(location) {
-  const url = `http://api.weatherapi.com/v1/current.json?key=fdecd8ac16a842419fe232418241602&q=${location}`;
+  const url = `https://api.weatherapi.com/v1/current.json?key=fdecd8ac16a842419fe232418241602&q=${location}`;
   const response = await fetch(url).catch(handleError);
   console.log(response);
   if (!response.ok) {
