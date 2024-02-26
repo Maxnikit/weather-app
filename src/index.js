@@ -1,6 +1,11 @@
 import "normalize.css";
 import "./style.css";
 
+import clearImage from "./assets/clear.jpg";
+import rainyImage from "./assets/rainy.jpg";
+import cloudyImage from "./assets/cloudy.jpg";
+import sunnyImage from "./assets/sunny.jpg";
+
 const locationDom = document.getElementById("location");
 const temperatureDom = document.getElementById("temperature");
 const conditionDom = document.getElementById("condition");
@@ -11,13 +16,13 @@ const lastUpdatedDom = document.getElementById("lastUpdated");
 const iconDom = document.getElementById("icon");
 
 const weatherBackgrounds = [
-  { weather: "clear", image: "./assets/clear.jpg" },
-  { weather: "rainy", image: "./assets/rainy.jpg" },
-  { weather: "light rain", image: "./assets/rainy.jpg" },
-  { weather: "cloudy", image: "./assets/cloudy.jpg" },
-  { weather: "partly cloudy", image: "./assets/cloudy.jpg" },
-  { weather: "overcast", image: "./assets/cloudy.jpg" },
-  { weather: "sunny", image: "./assets/sunny.jpg" },
+  { weather: "clear", image: clearImage },
+  { weather: "rainy", image: rainyImage },
+  { weather: "light rain", image: rainyImage },
+  { weather: "cloudy", image: cloudyImage },
+  { weather: "partly cloudy", image: cloudyImage },
+  { weather: "overcast", image: cloudyImage },
+  { weather: "sunny", image: sunnyImage },
 ];
 function setBackground(weather) {
   const weatherLower = weather.toLowerCase();
