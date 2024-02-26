@@ -47,6 +47,7 @@ async function getWeather(location) {
   console.log(response);
   if (response.status === 400) {
   }
+  // TODO handle 400 error(invalid input)
   const data = await response.json();
   processJson(data);
 }
