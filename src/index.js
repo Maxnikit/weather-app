@@ -10,8 +10,48 @@ const pressureDom = document.getElementById("pressure");
 const lastUpdatedDom = document.getElementById("lastUpdated");
 const iconDom = document.getElementById("icon");
 
-const bodyDom = document.querySelector("body");
+const weatherBackgrounds = [
+  { weather: "clear", image: "./assets/clear.jpg" },
+  { weather: "rainy", image: "./assets/rainy.jpg" },
+  { weather: "light rain", image: "./assets/rainy.jpg" },
+  { weather: "cloudy", image: "./assets/cloudy.jpg" },
+  { weather: "partly cloudy", image: "./assets/cloudy.jpg" },
+  { weather: "overcast", image: "./assets/cloudy.jpg" },
+  { weather: "sunny", image: "./assets/sunny.jpg" },
+];
+function setBackground(weather) {
+  const weatherLower = weather.toLowerCase();
+  const background = weatherBackgrounds.find(
+    (wb) => wb.weather === weatherLower
+  );
+  if (background) {
+    document.body.style.backgroundImage = `url(${background.image})`;
+  } else {
+    console.log(`Invalid weather condition: ${weatherLower}`);
+  }
+}
+function updateResultsDom(
+  city,
+  country,
+  temperature,
+  condition,
+  humidity,
+  wind,
+  pressure,
+  lastUpdated,
+  icon
+) {
+  locationDom.textContent = ` ${city}, ${country}`;
+  temperatureDom.textContent = `Temperature: ${temperature}°C`;
+  conditionDom.textContent = condition;
+  humidityDom.textContent = `Humidity: ${humidity}%`;
+  windDom.textContent = `Wind: ${wind} kph`;
+  pressureDom.textContent = `Pressure: ${pressure} mb`;
+  lastUpdatedDom.textContent = `Last Updated: ${lastUpdated}`;
 
+  iconDom.src = icon;
+  setBackground(condition);
+}
 function processJson(json) {
   const {
     location: { name: city, country },
@@ -74,49 +114,6 @@ function handleSearchFormSubmit(event) {
 document
   .querySelector("form")
   .addEventListener("submit", handleSearchFormSubmit);
-const weatherBackgrounds = [
-  { weather: "clear", image: "./assets/clear.jpg" },
-  { weather: "rainy", image: "./assets/rainy.jpg" },
-  { weather: "light rain", image: "./assets/rainy.jpg" },
-  { weather: "cloudy", image: "./assets/cloudy.jpg" },
-  { weather: "partly cloudy", image: "./assets/cloudy.jpg" },
-  { weather: "overcast", image: "./assets/cloudy.jpg" },
-  { weather: "sunny", image: "./assets/sunny.jpg" },
-];
-
-function setBackground(weather) {
-  const weatherLower = weather.toLowerCase();
-  const background = weatherBackgrounds.find(
-    (wb) => wb.weather === weatherLower
-  );
-  if (background) {
-    document.body.style.backgroundImage = `url(${background.image})`;
-  } else {
-    console.log(`Invalid weather condition: ${weatherLower}`);
-  }
-}
-function updateResultsDom(
-  city,
-  country,
-  temperature,
-  condition,
-  humidity,
-  wind,
-  pressure,
-  lastUpdated,
-  icon
-) {
-  locationDom.textContent = ` ${city}, ${country}`;
-  temperatureDom.textContent = `Temperature: ${temperature}°C`;
-  conditionDom.textContent = condition;
-  humidityDom.textContent = `Humidity: ${humidity}%`;
-  windDom.textContent = `Wind: ${wind} kph`;
-  pressureDom.textContent = `Pressure: ${pressure} mb`;
-  lastUpdatedDom.textContent = `Last Updated: ${lastUpdated}`;
-
-  iconDom.src = icon;
-  setBackground(condition);
-}
 
 getWeather("London");
 // getWeather("112312");
