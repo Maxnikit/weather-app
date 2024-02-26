@@ -25,14 +25,14 @@ const weatherBackgrounds = [
   { weather: "sunny", image: sunnyImage },
 ];
 function setBackground(weather) {
-  const weatherLower = weather.toLowerCase();
+  const weatherLowerTrimed = weather.toLowerCase().trimEnd();
   const background = weatherBackgrounds.find(
-    (wb) => wb.weather === weatherLower
+    (wb) => wb.weather === weatherLowerTrimed
   );
   if (background) {
     document.body.style.backgroundImage = `url(${background.image})`;
   } else {
-    console.log(`Invalid weather condition: ${weatherLower}`);
+    console.log(`Invalid weather condition: ${weatherLowerTrimed}`);
   }
 }
 function updateResultsDom(
