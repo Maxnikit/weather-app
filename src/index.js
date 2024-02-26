@@ -11,8 +11,7 @@ const lastUpdatedDom = document.getElementById("lastUpdated");
 const iconDom = document.getElementById("icon");
 
 const bodyDom = document.querySelector("body");
-bodyDom.style.backgroundImage =
-  "url(./assets/mihai-moisa-bw2MjdMZeSY-unsplash.jpg)";
+
 function processJson(json) {
   const {
     location: { name: city, country },
@@ -38,33 +37,64 @@ function processJson(json) {
     icon
   );
 }
-function handleError(error) {
-  console.log(error);
+function handleError(response) {
+  if (response.status === 400) {
+    const errorMessage = "Invalid city";
+    const validationErrorDom = document.getElementById("validationError");
+    validationErrorDom.textContent = errorMessage;
+    validationErrorDom.style = "display: block";
+    setTimeout(() => {
+      validationErrorDom.textContent = "";
+      validationErrorDom.style = "display: none";
+    }, 5000);
+  }
 }
 async function getWeather(location) {
   const url = `http://api.weatherapi.com/v1/current.json?key=fdecd8ac16a842419fe232418241602&q=${location}`;
   const response = await fetch(url).catch(handleError);
   console.log(response);
-  if (response.status === 400) {
+  if (!response.ok) {
+    handleError(response);
+    return;
   }
   // TODO handle 400 error(invalid input)
   const data = await response.json();
   processJson(data);
 }
-getWeather("London");
 
 // Function to handle search bar form submission
 function handleSearchFormSubmit(event) {
   event.preventDefault(); // Prevent the default form submit action
   const searchTerm = new FormData(event.target).get("search");
-  // You can call a function here to perform the search operation
+
   getWeather(searchTerm);
+  event.target.reset(); // Clear the input field after submit
 }
 
 document
   .querySelector("form")
   .addEventListener("submit", handleSearchFormSubmit);
+const weatherBackgrounds = [
+  { weather: "clear", image: "./assets/clear.jpg" },
+  { weather: "rainy", image: "./assets/rainy.jpg" },
+  { weather: "light rain", image: "./assets/rainy.jpg" },
+  { weather: "cloudy", image: "./assets/cloudy.jpg" },
+  { weather: "partly cloudy", image: "./assets/cloudy.jpg" },
+  { weather: "overcast", image: "./assets/cloudy.jpg" },
+  { weather: "sunny", image: "./assets/sunny.jpg" },
+];
 
+function setBackground(weather) {
+  const weatherLower = weather.toLowerCase();
+  const background = weatherBackgrounds.find(
+    (wb) => wb.weather === weatherLower
+  );
+  if (background) {
+    document.body.style.backgroundImage = `url(${background.image})`;
+  } else {
+    console.log(`Invalid weather condition: ${weatherLower}`);
+  }
+}
 function updateResultsDom(
   city,
   country,
@@ -76,8 +106,8 @@ function updateResultsDom(
   lastUpdated,
   icon
 ) {
-  locationDom.textContent = `Location: ${city}, ${country}`;
-  temperatureDom.textContent = `${temperature}°C`;
+  locationDom.textContent = ` ${city}, ${country}`;
+  temperatureDom.textContent = `Temperature: ${temperature}°C`;
   conditionDom.textContent = condition;
   humidityDom.textContent = `Humidity: ${humidity}%`;
   windDom.textContent = `Wind: ${wind} kph`;
@@ -88,8 +118,5 @@ function updateResultsDom(
   setBackground(condition);
 }
 
-function setBackground(weather) {
-  if (weather === "Clear") {
-    bodyDom.style.backgroundImage = "url(./assets/clear.jpg)";
-  }
-}
+getWeather("London");
+// getWeather("112312");

@@ -12,20 +12,34 @@
 
   <body>
     <main>
-      <form action="#" method="get">
-        <input type="search" name="search" placeholder="City" required />
-        <button type="submit"><i class="fas fa-search"></i></button>
-      </form>
-      <div id="result">
-        <div id="location"></div>
-        <div id="temperature"></div>
-        <div id="condition"></div>
-        <div id="humidity"></div>
-        <div id="wind"></div>
-        <div id="pressure"></div>
-        <div><img id="icon" /></div>
-        <div id="lastUpdated"></div>
-      </div>
+      <card>
+        <header>
+          <h2 id="location"></h2>
+          <div><img id="icon" /></div>
+        </header>
+
+        <form action="#" method="get">
+          <input
+            id="cityInput"
+            type="search"
+            name="search"
+            placeholder="City"
+            required
+          />
+          <button type="submit"><i class="fas fa-search"></i></button>
+          <div id="validationError"></div>
+        </form>
+        <div id="result">
+          <div id="temperature"></div>
+          <div id="condition"></div>
+          <div id="humidity"></div>
+          <div id="wind"></div>
+          <div id="pressure"></div>
+
+          <div id="lastUpdated"></div>
+        </div>
+      </card>
     </main>
+    <footer id="footer">2024 | Made with ❤ by Maxnikit</footer>
   </body>
 </html>
