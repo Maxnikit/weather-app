@@ -10,6 +10,9 @@ const pressureDom = document.getElementById("pressure");
 const lastUpdatedDom = document.getElementById("lastUpdated");
 const iconDom = document.getElementById("icon");
 
+const bodyDom = document.querySelector("body");
+bodyDom.style.backgroundImage =
+  "url(./assets/mihai-moisa-bw2MjdMZeSY-unsplash.jpg)";
 function processJson(json) {
   const {
     location: { name: city, country },
@@ -22,7 +25,7 @@ function processJson(json) {
       last_updated: lastUpdated,
     },
   } = json;
-  console.log(icon);
+  console.log(json);
   updateResultsDom(
     city,
     country,
@@ -35,32 +38,28 @@ function processJson(json) {
     icon
   );
 }
+function handleError(error) {
+  console.log(error);
+}
 async function getWeather(location) {
   const url = `http://api.weatherapi.com/v1/current.json?key=fdecd8ac16a842419fe232418241602&q=${location}`;
-  const response = await fetch(url);
+  const response = await fetch(url).catch(handleError);
+  console.log(response);
+  if (response.status === 400) {
+  }
   const data = await response.json();
   processJson(data);
 }
 getWeather("London");
-// Function to handle search bar input change
-// function handleSearchInputChange(event) {
-//   const searchTerm = event.target.value;
-//   console.log(`Search term entered: ${searchTerm}`);
-// }
 
 // Function to handle search bar form submission
 function handleSearchFormSubmit(event) {
   event.preventDefault(); // Prevent the default form submit action
   const searchTerm = new FormData(event.target).get("search");
-  console.log(`Form submitted with search term: ${searchTerm}`);
   // You can call a function here to perform the search operation
   getWeather(searchTerm);
 }
 
-// // Event listeners for the search input and form submission
-// document
-//   .querySelector('input[name="search"]')
-//   .addEventListener("change", handleSearchInputChange);
 document
   .querySelector("form")
   .addEventListener("submit", handleSearchFormSubmit);
@@ -83,6 +82,13 @@ function updateResultsDom(
   windDom.textContent = `Wind: ${wind} kph`;
   pressureDom.textContent = `Pressure: ${pressure} mb`;
   lastUpdatedDom.textContent = `Last Updated: ${lastUpdated}`;
-  console.log(icon);
+
   iconDom.src = icon;
+  setBackground(condition);
+}
+
+function setBackground(weather) {
+  if (weather === "Clear") {
+    bodyDom.style.backgroundImage = "url(./assets/clear.jpg)";
+  }
 }
